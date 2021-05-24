@@ -2,10 +2,16 @@ import { useMemo } from "react";
 import getContract from "./getContract";
 import { useWeb3React } from "@web3-react/core";
 import ERC20_ABI from "../abis/erc20-ctb.json";
+import { Contract } from "@ethersproject/contracts";
+import { Web3Provider } from "@ethersproject/providers";
 
 // returns null on errors
-function useContract(address, ABI, withSignerIfPossible = true) {
-  const { library, account } = useWeb3React();
+function useContract(
+  address: string | undefined,
+  ABI: any,
+  withSignerIfPossible = true
+): Contract | null {
+  const { library, account } = useWeb3React<Web3Provider>();
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null;

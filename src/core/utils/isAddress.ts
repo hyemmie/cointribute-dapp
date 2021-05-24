@@ -1,9 +1,11 @@
 import { getAddress } from "@ethersproject/address";
 
-export default function isAddress(value) {
+function isAddress(value: any): string | false {
   try {
     return getAddress(value);
   } catch {
     return false;
   }
 }
+
+export default isAddress;
