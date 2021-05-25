@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Badge, Image } from "@chakra-ui/react";
+import { propertyType } from "../types/propertyType";
 
-export function BeneficiaryCard(props) {
+export function BeneficiaryCard(props: propertyType) {
   return (
     <Box
       maxW="sm"
@@ -31,7 +32,6 @@ export function BeneficiaryCard(props) {
             from {props.start}
           </Box>
         </Box>
-
         <Box
           mt="1"
           fontWeight="semibold"
@@ -41,7 +41,6 @@ export function BeneficiaryCard(props) {
         >
           {props.title}
         </Box>
-
         <Box>
           {props.totalAmount}
           <Box as="span" color="gray.600" fontSize="sm">

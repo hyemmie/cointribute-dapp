@@ -17,11 +17,12 @@ import { property } from "../beneficiary/property";
 import { BeneficiaryCard } from "./BeneficiaryCard";
 import { MyContribution } from "./MyContribution";
 import { useCTBToken } from "../core/utils/useContribute";
+import BigNumber from "bignumber.js";
 
-function Index(props) {
+function Index() {
   const { account, activate, deactivate } = useWeb3React();
-  const [userAccount, setUserAccount] = useState(undefined);
-  const [balance, setBalance] = useState(undefined);
+  const [userAccount, setUserAccount] = useState<string | undefined>(undefined);
+  const [balance, setBalance] = useState<string | undefined>(undefined);
   const CTBToken = useCTBToken();
 
   const connectWallet = () => {
@@ -43,7 +44,7 @@ function Index(props) {
 
   useEffect(() => {
     if (account && CTBToken) {
-      CTBToken.balanceOf(account).then((res) => {
+      CTBToken.balanceOf(account).then((res: BigNumber) => {
         const balance = res.toString();
         console.log(balance);
         setBalance(balance);
@@ -104,10 +105,13 @@ function Index(props) {
                     Connected
                   </Badge>
                 </Text>
-                <Text fontSize="sm">{`${userAccount?.substring(
-                  0,
-                  6
-                )}...${userAccount?.substring(userAccount?.length - 4)}`}</Text>
+                {userAccount && (
+                  <Text fontSize="sm">
+                    {`${userAccount.substring(0, 6)}...${userAccount.substring(
+                      userAccount.length - 4
+                    )}`}
+                  </Text>
+                )}
               </Box>
             </>
           ) : (
@@ -146,7 +150,7 @@ function Index(props) {
         style={{
           marginTop: 10,
           paddingLeft: 30,
-          paddignRight: 30,
+          paddingRight: 30,
           marginBottom: 100,
         }}
       >
