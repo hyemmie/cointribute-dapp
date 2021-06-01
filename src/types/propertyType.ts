@@ -1,4 +1,5 @@
 export type propertyType = {
+  id: number;
   imageUrl: string;
   imageAlt: string;
   type: string;

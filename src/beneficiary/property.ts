@@ -1,5 +1,6 @@
 export const property = [
   {
+    id: 0,
     imageUrl:
       "https://cdn.pixabay.com/photo/2016/11/29/13/56/asian-1870022__480.jpg",
     imageAlt: "Rear view of modern home with pool",
@@ -11,6 +12,7 @@ export const property = [
     contributors: 34,
   },
   {
+    id: 1,
     imageUrl:
       "https://cdn.pixabay.com/photo/2015/07/17/22/42/startup-849804__480.jpg",
     imageAlt: "Rear view of modern home with pool",
