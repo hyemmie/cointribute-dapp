@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import injectedConnector from "../core/connectors/InjectedConnector";
-import {
-  Button,
-  Heading,
-  Spacer,
-  Box,
-  Text,
-  Badge,
-  Flex,
-  Image,
-  Link,
-} from "@chakra-ui/react";
-import Logo from "../images/cointribute-logo.png";
+import { Heading, Box, Flex } from "@chakra-ui/react";
 import { property } from "../beneficiary/property";
 import { BeneficiaryCard } from "./BeneficiaryCard";
 import { MyContribution } from "./MyContribution";
 import { useCTBToken } from "../core/utils/useContribute";
 import BigNumber from "bignumber.js";
+import Header from "./Header";
 
 function Index() {
   const { account, activate, deactivate } = useWeb3React();
@@ -63,64 +53,11 @@ function Index() {
         alignContent: "center",
       }}
     >
-      <header
-        style={{
-          width: "100%",
-          height: 80,
-          top: 0,
-          boxShadow: "0px 1px 6px #00000029",
-          paddingLeft: 40,
-          paddingRight: 40,
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-          flex: 1,
-        }}
-      >
-        <Flex justify="space-between" align="center">
-          <Link href="localhost:3000/main">
-            <Image
-              src={Logo}
-              alt={"Contribute"}
-              style={{
-                width: 250,
-                height: "auto",
-              }}
-            />
-          </Link>
-          <Spacer />
-          {userAccount ? (
-            <>
-              <Box ml="3">
-                <Text fontWeight="bold">CTB Balance</Text>
-                <Text fontSize="sm">
-                  {balance ? `${balance} ` : "Checking"}
-                  CTB
-                </Text>
-              </Box>
-              <Box ml="3">
-                <Text fontWeight="bold">
-                  User Address
-                  <Badge ml="1" colorScheme="teal">
-                    Connected
-                  </Badge>
-                </Text>
-                {userAccount && (
-                  <Text fontSize="sm">
-                    {`${userAccount.substring(0, 6)}...${userAccount.substring(
-                      userAccount.length - 4
-                    )}`}
-                  </Text>
-                )}
-              </Box>
-            </>
-          ) : (
-            <Button onClick={connectWallet} colorScheme="teal" variant="ghost">
-              Connect Wallet
-            </Button>
-          )}
-        </Flex>
-      </header>
+      <Header
+        account={userAccount}
+        tokenBalance={balance}
+        connectHandler={connectWallet}
+      />
       {userAccount && (
         <Box
           maxW="70%"
@@ -155,7 +92,7 @@ function Index() {
         }}
       >
         {property?.map((beneficiary, _index) => {
-          return BeneficiaryCard(beneficiary);
+          return <BeneficiaryCard beneficiary={beneficiary} />;
         })}
       </Flex>
     </div>
