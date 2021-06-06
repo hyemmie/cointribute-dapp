@@ -2,16 +2,15 @@ import { useMemo } from "react";
 import getContract from "./getContract";
 import { useWeb3React } from "@web3-react/core";
 import ERC20_ABI from "../abis/erc20-ctb.json";
-import { Contract } from "@ethersproject/contracts";
-import { Web3Provider } from "@ethersproject/providers";
+import { ethers } from "ethers";
 
 // returns null on errors
 function useContract(
   address: string | undefined,
   ABI: any,
   withSignerIfPossible = true
-): Contract | null {
-  const { library, account } = useWeb3React<Web3Provider>();
+): ethers.Contract | null {
+  const { library, account } = useWeb3React<ethers.providers.Web3Provider>();
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null;
@@ -31,9 +30,9 @@ function useContract(
 
 export function useCTBToken() {
   return useContract(
-    "0xd5e728655c0eccca37f4c245e6a9f55bd4eae802",
+    "0xb60C4f4Ce173b6d34E937E1B944821558DA332F1",
     ERC20_ABI,
-    false
+    true
   );
 }
 
