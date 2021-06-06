@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import injectedConnector from "../core/connectors/InjectedConnector";
 import { Heading, Box, Flex } from "@chakra-ui/react";
@@ -8,11 +8,15 @@ import { MyContribution } from "./MyContribution";
 import { useCTBToken } from "../core/utils/useContribute";
 import BigNumber from "bignumber.js";
 import Header from "./Header";
+import { ethers } from "ethers";
+import { DonationType } from "../types/DonationType";
 
 function Index() {
   const { account, activate, deactivate } = useWeb3React();
   const [userAccount, setUserAccount] = useState<string | undefined>(undefined);
   const [balance, setBalance] = useState<string | undefined>(undefined);
+  const [donationList, setDonationList] =
+    useState<DonationType[] | undefined>(undefined);
   const CTBToken = useCTBToken();
 
   const connectWallet = () => {
@@ -36,8 +40,16 @@ function Index() {
     if (account && CTBToken) {
       CTBToken.balanceOf(account).then((res: BigNumber) => {
         const balance = res.toString();
-        console.log(balance);
         setBalance(balance);
+      });
+    }
+  }, [account, CTBToken]);
+
+  useEffect(() => {
+    if (account && CTBToken) {
+      CTBToken.callStatic.getDonationList().then((res: any) => {
+        console.log(res);
+        setDonationList(res);
       });
     }
   }, [account, CTBToken]);
@@ -91,8 +103,14 @@ function Index() {
           marginBottom: 100,
         }}
       >
-        {property?.map((beneficiary, _index) => {
-          return <BeneficiaryCard beneficiary={beneficiary} />;
+        {donationList?.map((donation, index) => {
+          return (
+            <BeneficiaryCard
+              donation={donation}
+              beneficiary={property[index]}
+              key={index}
+            />
+          );
         })}
       </Flex>
     </div>

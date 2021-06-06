@@ -3,9 +3,11 @@ import { Box, Badge, Image, Link } from "@chakra-ui/react";
 import { Link as ReachLink } from "react-router-dom";
 
 import { propertyType } from "../types/propertyType";
+import { DonationType } from "../types/DonationType";
 
 type Props = {
   beneficiary: propertyType;
+  donation: DonationType;
 };
 
 export const BeneficiaryCard: React.FunctionComponent<Props> = (
